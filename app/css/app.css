@@ -1,3 +1,25 @@
+@font-face {
+  font-family: 'fontAwesome';
+  src:url('fontawesome-webfont.eot');
+  src:url('fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+  url('fontawesome-webfont.svg#fontawesome-webfont') format('svg'),
+  url('fontawesome-webfont.woff') format('woff'),
+  url('fontawesome-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+html, body{
+  height: 100%;
+  margin: 0 0;
+}
+
+#map{
+  height: 100%;
+  width: 100%;
+}
+
 /* app css stylesheet */
 
 .menu {
@@ -5,6 +27,7 @@
   border-bottom: 0.1em solid black;
   margin-bottom: 2em;
   padding: 0 0 0.5em;
+
 }
 
 .menu:before {
@@ -28,3 +51,102 @@
   content: "";
   padding: 0;
 }
+
+#geodex{
+  position:fixed;
+  top:5%;
+  right:2%;
+  width: 400px;
+  height: 90%;
+  background-color: rgba(255,255,255, 0.85);
+  margin-right:24px;
+  border-radius: 24px;
+  /*background-image: url('../images/patterns/paper.jpg');*/
+}
+
+
+
+#geodexHeader{
+  height: 12%;
+  width: 100%;
+  background-color: grey;
+  color: #dadada;
+  padding-top: 10px;
+  border-radius-top: 4px;
+}
+
+#geodexHeader h1 {
+  margin: 5px 0px 5px 15px;
+}
+
+
+
+
+
+
+/*deodexHeader*/
+
+#contentContainer {
+  width: 100%;
+  height: 80%;
+  overflow: auto;
+}
+
+
+#actionBar {
+  width: 100%;
+  height: 7%;
+  position: absolute;
+  bottom: 0;
+  background-color: grey;
+  border-top: 2px solid black;
+}
+
+
+
+#addData{
+  float: right;
+  margin: -30px 0px 0px 0px;
+
+}
+
+#addData a {
+  display: block;
+  color: rgb(218, 218, 218);
+  font-size: 2em;
+}
+
+#addData a:hover{
+  color: #F7E059;
+  text-decoration: none;
+}
+
+#social-nav li {
+  display: inline;
+  margin: 0 5%;
+  font-size: 2em;
+}
+
+#social-nav ul {
+  width: 200px;
+  margin: 10px auto;
+  text-align: center;
+}
+
+#social-nav a {
+  color: rgb(218, 218, 218);
+  text-decoration: none;
+  width: 1.3em;
+  text-align: center;
+}
+
+#social-nav a:hover {
+  color: #F7E059;
+  text-decoration: none;
+}
+
+.hidden {
+  display: none;
+}
+
+

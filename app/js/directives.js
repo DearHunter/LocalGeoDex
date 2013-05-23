@@ -9,3 +9,9 @@ angular.module('myApp.directives', []).
       elm.text(version);
     };
   }]);
+
+
+angular.module('myModule', ['ui.bootstrap']);
+
+
+
