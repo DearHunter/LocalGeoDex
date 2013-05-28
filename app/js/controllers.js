@@ -1,158 +1,122 @@
 // 'use strict';
+// What does this mean? If I enable it, obj in my for loop breaks as not defined
 
-// /* Controllers */
+/* Controllers */
 
-// angular.module('myApp.controllers', []).
-//   controller('MyCtrl1', [function() {}])
-//   .controller('MyCtrl2', [function() {}]);
+var markerLayer = L.layerGroup(); 
+// Need this global layer to be able to clear the layer before 
+//adding a new layer, removed dublicate markers
+// In future, need a way of checking if x in layer
+
+angular.module("myApp.controllers", [])
+// .controller("getJSON_Via_HTTP_Request", function($scope, $http) {
+//      	$scope.oneAtATime = true;
+// 		$http.get("js/featureDB.js")
+// 		.then(function(response){
+// 			$scope.featDB = response.data;
+// 		})
+// 	});
 
 
-angular.module("myApp.controllers", []);
-// .
-// 	controller("getJSON_Via_HTTP_Request", function($scope, $http) {
+.controller("getJSON_Via_HTTP_Request", function($scope, $http, $filter) {
+	$http.get("js/featureDB.js")
+	.then(function(dataResponse){
+		$scope.featDB = dataResponse.data;
+		$scope.oneAtATime = true;
+
+    	$scope.save = function() {
+    		$scope.savedJSON = $filter('filter')($scope.featDB, $scope.query);
+    			// var filterSelectLayer = L.geoJson().addTo(map);
+    			// console.log($scope.savedJSON);
+    			// $scope.json = angular.fromJson($scope.savedJSON);
+    		var markerList = [];
+
+    		for (obj in $scope.savedJSON){
+   				// console.log($scope.savedJSON[obj].geometry.coordinates[1], $scope.savedJSON[obj].geometry.coordinates[0]);
+				var marker = L.marker([$scope.savedJSON[obj].geometry.coordinates[1], 
+    				$scope.savedJSON[obj].geometry.coordinates[0]])
+					.bindPopup($scope.savedJSON[obj].properties.name);
+					// Add other wanted properties here, popups, mouseover effects...
+				markerList.push(marker);
+			};
+			// console.log(markerList);
+				// if (markerLayer != 0) {markerLayer.clearLayers()}
+			markerLayer.clearLayers();
+			markerLayer = L.layerGroup(markerList)
+
+			markerLayer.addTo(map);
+			// markerLayer.clearLayers()
+		};
+		$scope.clear = function() {
+			markerLayer.clearLayers()
+				//declare markerLayer as a global varible and this will probably work
+		};
+})});
+
+
+    				// console.log(marker_location);
+    				// new L.Marker(marker_location).addTo(map);
+    			// marker1.addTo(map);
+    				// for (x in $scope.savedJSON){
+    				// 	// var lat = "";
+    				// 	// if (lat == )
+    				// 	var lat = $scope.savedJSON[obj].geometry.coordinates[x];
+    				// 	var marker_location = new L.LatLng(lat, $scope.savedJSON[obj].geometry.coordinates[y]);
+
+    				// 	// console.log(lat);
+    				// 	for (y in $scope.savedJSON){
+    				// 		var marker_location = new L.LatLng(lat, $scope.savedJSON[obj].geometry.coordinates[y]);
+    				// 		console.log(marker_location);
+    				// 		;};}
+
+    					
+
+
+
+
+
+
+    // 		$scope.save = function() {
+     // 		$scope.savedJSON = angular.toJson($filter('filter')($scope.featDB, $scope.query), true);
+    		// console.log($scope.savedJSON);
+    		// $scope.json = angular.fromJson($scope.savedJSON);
+   			// for (obj in $scope.json){
+   			// 	console.log($scope.json[obj].geometry.coordinates);};
+
+    			// angular.forEach($scope.savedJSON, function(key, value){
+    			// 	console.log(key + ': ' + value)
+    			// });
+    				// console.log($scope.savedJSON.geometry.point);
+        			// var layer = new L.CircleMarker(marker_location);
+
+        			// var marker_location = new L.LatLng($scope.savedJSON[obj].geometry.coordinates);
+        			// var layer = new L.CircleMarker(marker_location);
+
+    			// geodexInit($scope.savedJSON);
+
+
+// for (incident in crime_data) {
+//         var marker_location = new L.LatLng(crime_data[incident].lat, crime_data[incident].long);
+//         var layer = new L.CircleMarker(marker_location);
+// }
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+    // SOOOOOO this above angular.toJson actually makes it into a string...
+    //////////////////////////////////////////////////////////////////////////////
+
+            // angular.forEach(data.locations, function(location, key){
+            // 	var marker = L.marker([location.latitude, location.longitude]).addTo(map);
+            // })
+
+
+
+
+// Above is working in importing the json file! Now to just get it into the index.html and being displayed on the map!
+
+// function getJSON_Via_HTTP_Request ($scope, $http) {
 // 		$http.get("js/featureDB.js")
 // 		.then(function(resMeansWhat){
 // 			$scope.featDB = resMeansWhat.data;
-// 		})
-// 	}
-
-// Above is working in importing the json file! Now to just get it into the index.html and being displayed on the map!
-// );
-function getJSON_Via_HTTP_Request ($scope, $http) {
-		$http.get("js/featureDB.js")
-		.then(function(resMeansWhat){
-			$scope.featDB = resMeansWhat.data;
-		})}
-
-
-
-//   App.controller('TodoCtrl', function($scope, $http) {
-//   $http.get('todos.json')
-//        .then(function(res){
-//           $scope.todos = res.data;                
-//         });
-// });
-
-
-function AccordionDemoCtrl($scope) {
-  $scope.oneAtATime = true;
-
-  $scope.groups = [
-  {
-    title: "Siu Lek Yuen Road Playground",
-    content: "Siu Lek Yuen Road, Sha Tin",
-    more: {even: "less"}
-
-  },
-  {
-    title: "Yee Shing Lane Temporary Sitting Out Area",
-    content: "Yee Shing Lane, Chai Wan"
-  },
-  {
-    title: "Kowloon Bay Park",
-    content: "Kai Lai Road, Kowloon Bay"
-  },
-  {
-    title: "Carpenter Road Park",
-    content: "Junction Road, Kowloon"
-  },
-  {
-    title: "Kung Lok Road Playground",
-    content: "Kung Lok Road, Kwun Tong, Kowloon"
-  },
-  {
-    title: "Siu Sai Wan Road Garden",
-    content: "Siu Sai Wan Road, Chai Wan"
-  },
-  {
-    title: "Sha Tin Road Safety Park",
-    content: "1 Kong Pui Street, Sha Tin"
-  },
-  {
-    title: "Tuen Mun Park",
-    content: "Tuen Mun Heung Sze Wui Road, Tuen Mun"
-  },
-  {
-    title: "Wu Shan Recreation Playground",
-    content: "Tuen Mun Wu Shan Road"
-  },
-  {
-    title: "West Kowloon Waterfront Promenade",
-    content: "West Kowloon Reclamation Area (J/O Austin Road West/ Nga Cheung Road)"
-  },
-  {
-    title: "Tsuen Wan Park",
-    content: "59 Wing Shun Street, Tsuen Wan"
-  },
-  {
-    title: "Morrison Hill Road Playground",
-    content: "Sung Tak Street/ Morrison Hill Road, Wan Chai"
-  },
-  {
-    title: "Sung Tak Street/ Morrison Hill Road, Wan Chai",
-    content: "Lorem ipsum poopem sapsam"
-  },
-  {
-    title: "Tsing Yi Northeast Park",
-    content: "10, Tam Kon Shan Road, Tsing Yi"
-  },
-  {
-    title: "Quarry Bay Park",
-    content: "Near Hoi Tai Street, Quarry Bay"
-  },
-  {
-    title: "Pak Wo Road Playground",
-    content: "Pak Wo Road, Fanling, N.T."
-  },
-
-  {
-    title: "Tsing Hung Road Playground",
-    content: "Tsing Hung Road, Tsing Yi, N.T."
-  }
-  ];
-  // featureCollection.type.features.type
-  $scope.geojson = [
-    {
-      "type": "Feature",
-      "properties": {
-        "ENGLISH CATEGORY": "Cycling Sites",
-        "中文類別": "單車場",
-        "ENGLISHNAME": "Siu Lek Yuen Road Playground",
-        "中文名稱": "小瀝源路遊樂場",
-        "ADDRESS": "Siu Lek Yuen Road, Sha Tin",
-        "中文地址": "沙田小瀝源路"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-        114.206377,
-        22.386308,
-        0
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "ENGLISH CATEGORY": "Cycling Sites",
-        "中文類別": "單車場",
-        "ENGLISHNAME": "Yee Shing Lane Temporary Sitting Out Area",
-        "中文名稱": "怡盛里臨時休憩處",
-        "ADDRESS": "Yee Shing Lane, Chai Wan",
-        "中文地址": "柴灣怡盛里"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-        114.238006,
-        22.26415,
-        0
-        ]
-      }
-    }];
-
-    $scope.addItem = function() {
-      var newItemNo = $scope.items.length + 1;
-      $scope.items.push('Item ' + newItemNo);
-    };
-  };
+// 		})};

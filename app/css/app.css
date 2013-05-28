@@ -150,3 +150,10 @@ html, body{
 }
 
 
+#bottom {
+  position: fixed;
+  bottom: 5px;
+  width: 300px;
+  height: 200px;
+  background-color: white;
+}
