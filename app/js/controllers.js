@@ -35,11 +35,12 @@ angular.module("myApp.controllers", [])
    				// console.log($scope.savedJSON[obj].geometry.coordinates[1], $scope.savedJSON[obj].geometry.coordinates[0]);
 				var marker = L.marker([$scope.savedJSON[obj].geometry.coordinates[1], 
     				$scope.savedJSON[obj].geometry.coordinates[0]])
-					.bindPopup($scope.savedJSON[obj].properties.name);
+					.bindPopup($scope.savedJSON[obj].properties.name)
+					.openPopup();
 					// Add other wanted properties here, popups, mouseover effects...
 				markerList.push(marker);
+				console.log(marker)
 			};
-			// console.log(markerList);
 				// if (markerLayer != 0) {markerLayer.clearLayers()}
 			markerLayer.clearLayers();
 			markerLayer = L.layerGroup(markerList)
@@ -49,7 +50,7 @@ angular.module("myApp.controllers", [])
 		};
 		$scope.clear = function() {
 			markerLayer.clearLayers()
-				//declare markerLayer as a global varible and this will probably work
+				//declare markerLayer as a global varible and this will work
 		};
 })});
 
