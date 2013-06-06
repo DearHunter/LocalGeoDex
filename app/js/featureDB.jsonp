@@ -1,4 +1,5 @@
-[
+JSON_CALLBACK({ "type": "FeatureCollection",
+        "features": [
             {
                 "type": "Feature",
                 "properties": {
@@ -304,3 +305,5 @@
                 }
             }
         ]
+    }
+);

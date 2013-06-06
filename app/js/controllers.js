@@ -8,7 +8,10 @@ var markerLayer = L.layerGroup();
 //adding a new layer, removed dublicate markers
 // In future, need a way of checking if x in layer
 
+
+
 angular.module("myApp.controllers", [])
+// myApp.controller("myApp.controllers", [])
 // .controller("getJSON_Via_HTTP_Request", function($scope, $http) {
 //      	$scope.oneAtATime = true;
 // 		$http.get("js/featureDB.js")
@@ -17,21 +20,24 @@ angular.module("myApp.controllers", [])
 // 		})
 // 	});
 
+// features.properties.name
 
 .controller("getJSON_Via_HTTP_Request", function($scope, $http, $filter) {
-	$http.get("js/featureDB.js")
-	.then(function(dataResponse){
-		$scope.featDB = dataResponse.data;
-		$scope.oneAtATime = true;
+    // $http.jsonp("js/featureDB.jsonp?callback=JSON_CALLBACK")
+    $http.get("js/featureDB.js")
+    .then(function(dataResponse){
+    // .success(function(dataResponse){
+        $scope.featDB = dataResponse.data;
+        $scope.oneAtATime = true;
 
-    	$scope.save = function() {
-    		$scope.savedJSON = $filter('filter')($scope.featDB, $scope.query);
-    			// var filterSelectLayer = L.geoJson().addTo(map);
-    			// console.log($scope.savedJSON);
-    			// $scope.json = angular.fromJson($scope.savedJSON);
-    		var markerList = [];
+        $scope.save = function() {
+            $scope.savedJSON = $filter('filter')($scope.featDB, $scope.query);
+                // var filterSelectLayer = L.geoJson().addTo(map);
+                // console.log($scope.savedJSON);
+                // $scope.json = angular.fromJson($scope.savedJSON);
+            var markerList = [];
 
-    		for (obj in $scope.savedJSON){
+            for (obj in $scope.savedJSON){
    				// console.log($scope.savedJSON[obj].geometry.coordinates[1], $scope.savedJSON[obj].geometry.coordinates[0]);
 				var marker = L.marker([$scope.savedJSON[obj].geometry.coordinates[1], 
     				$scope.savedJSON[obj].geometry.coordinates[0]])
